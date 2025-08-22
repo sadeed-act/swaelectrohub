@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="author" content="Muhammad Sadeed Ali CIHE240356, Waleed Ahmed, Abu Bakar">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ElectroHub — Modern Electronics Store</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <img src="images/logo.png" alt="ElectroHub logo" class="logo"/>
+      <h1>SWA CIHE ElectroHub</h1>
+    </div>
+    <nav class="main-nav">
+      <a href="index.html" class="active">Home</a>
+      <a href="product.html">Products</a>
+      <a href="about.html">About</a>
+      <a href="admin.html">Admin</a>
+      <a href="user.html">Dashboard</a>
+      <button id="themeToggle" class="btn small">Toggle Theme</button>
+      <a href="register.html" class="btn">Register</a>
+      <div id="authContainer">
+        <button id="loginBtn" class="btn outline">Login</button>
+      </div>
+      <a href="cart.html" class="btn cart">Cart <span id="cartCount">0</span></a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero card">
+      <div>
+        <h2>Fresh Tech, Fresh Deals</h2>
+        <p>Discover handpicked electronics, great prices, and stylish design.</p>
+        <a href="product.html" class="btn large">Shop All Products</a>
+      </div>
+      <img src="images/hero-device.png" alt="Hero device" />
+    </section>
+
+    <section class="search-featured">
+      <div class="search-bar">
+        <input id="searchInput" type="search" placeholder="Search products, brands, model..." />
+        <button id="searchBtn" class="btn">Search</button>
+      </div>
+
+      <h3>Featured Products</h3>
+      <div id="featuredGrid" class="grid"></div>
+
+      <!-- Optional hidden productGrid for all products if needed -->
+      <!-- <div id="productGrid" class="grid" style="display:none;"></div> -->
+    </section>
+
+    <section class="embellishments">
+      <div class="cards grid">
+        <article class="card">
+          <h4>Fast Delivery</h4>
+          <p>Get your items quickly with our reliable partners.</p>
+        </article>
+        <article class="card">
+          <h4>Secure Checkout</h4>
+          <p>We use modern encryption for your peace of mind.</p>
+        </article>
+        <article class="card">
+          <h4>Support</h4>
+          <p>24/7 customer support to help you out.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <button id="scrollTop" title="Scroll to top">↑</button>
+
+  <footer class="site-footer">
+    <p>&copy; 2025 ElectroHub. All rights reserved.</p>
+  </footer>
+
+  <script src="js/products.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    // Login/logout button toggle logic
+    const authContainer = document.getElementById('authContainer');
+
+    function showUserState() {
+      const user = JSON.parse(sessionStorage.getItem('user') || 'null');
+      if (user) {
+        authContainer.innerHTML = `
+          <span style="margin-right:10px;">Hi, ${user.name}</span>
+          <button id="logoutBtn" class="btn outline small">Logout</button>
+        `;
+        const logoutBtn = document.getElementById('logoutBtn');
+        logoutBtn.addEventListener('click', () => {
+          sessionStorage.removeItem('user');
+          showUserState();
+        });
+      } else {
+        authContainer.innerHTML = `<button id="loginBtn" class="btn outline">Login</button>`;
+        attachLoginListener();
+      }
+    }
+
+    function attachLoginListener() {
+      const loginBtn = document.getElementById('loginBtn');
+      if (loginBtn) {
+        loginBtn.addEventListener('click', () => {
+          const name = prompt('Enter demo username (placeholder):', 'student01');
+          if (name) {
+            sessionStorage.setItem('user', JSON.stringify({ name }));
+            alert('Logged in as ' + name + ' (placeholder)');
+            showUserState();
+          }
+        });
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      showUserState();
+
+      // Render featured products from PRODUCTS in products.js
+      if (typeof renderProducts === 'function') {
+        renderProducts('featuredGrid', PRODUCTS.slice(0, 4));
+      }
+
+      // Search button logic
+      const searchInput = document.getElementById('searchInput');
+      const searchBtn = document.getElementById('searchBtn');
+      if (searchBtn) {
+        searchBtn.addEventListener('click', () => {
+          const q = (searchInput.value || '').toLowerCase().trim();
+          const filtered = PRODUCTS.filter(p =>
+            p.name.toLowerCase().includes(q) ||
+            (p.desc && p.desc.toLowerCase().includes(q))
+          );
+          renderProducts('featuredGrid', filtered);
+        });
+      }
+    });
+  </script>
+  <script src="js/login.js"></script>
+</body>
+</html>

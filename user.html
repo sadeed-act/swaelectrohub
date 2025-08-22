@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="author" content="Group Members: [Replace with names and student IDs]">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>User Dashboard — ElectroHub</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header small">
+    <div class="brand">
+      <img src="images/logo.png" alt="ElectroHub logo" class="logo"/>
+      <h1>ElectroHub</h1>
+    </div>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="product.html">Products</a>
+      <a href="user.html" class="active">Dashboard</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <main class="container narrow">
+    <h2>Your Dashboard</h2>
+    <p class="muted">This section shows placeholder profile data after the demo login.</p>
+
+    <section class="card">
+      <h3>Profile</h3>
+      <form id="profileForm" class="form">
+        <label>Full name
+          <input id="pfname" />
+        </label>
+        <label>Email
+          <input id="pemail" type="email" />
+        </label>
+        <div class="form-actions">
+          <button class="btn" type="submit">Save</button>
+          <button type="button" id="logoutBtn" class="btn outline">Logout</button>
+        </div>
+        <div id="profileFeedback" class="feedback" aria-live="polite"></div>
+      </form>
+    </section>
+  </main>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Demo profile populate from sessionStorage
+    const profileForm = document.getElementById('profileForm');
+    const feedback = document.getElementById('profileFeedback');
+    function loadProfile(){
+      const user = JSON.parse(sessionStorage.getItem('user')||'null');
+      if(user){
+        document.getElementById('pfname').value = user.name || '';
+        document.getElementById('pemail').value = user.email || '';
+      }
+    }
+    profileForm.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const user = {name: document.getElementById('pfname').value, email: document.getElementById('pemail').value};
+      sessionStorage.setItem('user', JSON.stringify(user));
+      feedback.textContent = 'Profile saved (placeholder).';
+      feedback.classList.add('success');
+    });
+    document.getElementById('logoutBtn').addEventListener('click', ()=>{
+      sessionStorage.removeItem('user');
+      location.reload();
+    });
+    document.addEventListener('DOMContentLoaded', loadProfile);
+  </script>
+</body>
+</html>

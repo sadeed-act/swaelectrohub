@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="author" content="Group Members: [Replace with names and student IDs]">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Products — ElectroHub</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header small">
+    <div class="brand">
+      <img src="images/logo.png" alt="ElectroHub logo" class="logo"/>
+      <h1>SWA CIHE ElectroHub</h1>
+    </div>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="product.html" class="active">Products</a>
+      <a href="about.html">About</a>
+      <a href="cart.html">Cart</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="controls">
+      <input id="filterInput" placeholder="Filter by category (e.g., Phone)" />
+      <select id="sortSelect">
+        <option value="default">Sort by</option>
+        <option value="price-asc">Price: Low → High</option>
+        <option value="price-desc">Price: High → Low</option>
+        <option value="name-asc">Name: A → Z</option>
+      </select>
+      <button id="clearFilters" class="btn outline">Clear</button>
+    </section>
+
+    <section>
+      <div id="productGrid" class="grid"></div>
+    </section>
+  </main>
+
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

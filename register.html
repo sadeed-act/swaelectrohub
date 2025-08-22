@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="author" content="Group Members: [Replace with names and student IDs]">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Register — ElectroHub</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header small">
+    <div class="brand">
+      <img src="images/logo.png" alt="ElectroHub logo" class="logo"/>
+      <h1>SWA CIHE ElectroHub</h1>
+    </div>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="product.html">Products</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <main class="container narrow">
+    <h2>Create an account</h2>
+    <p>Please fill the form below. All fields are required.</p>
+
+    <form id="registerForm" class="form card" novalidate>
+      <label>Full name
+        <input name="fullname" type="text" required minlength="3" placeholder="Your full name" />
+      </label>
+
+      <label>Email
+        <input name="email" type="email" required placeholder="you@example.com" />
+      </label>
+
+      <label>Password
+        <input name="password" id="password" type="password" required minlength="8" placeholder="At least 8 characters" />
+      </label>
+
+      <label>Confirm password
+        <input name="confirm" id="confirm" type="password" required placeholder="Confirm password" />
+      </label>
+
+      <fieldset>
+        <legend>Preferred language</legend>
+        <select name="lang" required>
+          <option value="en">English</option>
+          <option value="ur">Urdu</option>
+          <option value="ar">Arabic</option>
+        </select>
+      </fieldset>
+
+      <div class="form-actions">
+        <button type="submit" class="btn">Register</button>
+        <a href="login.html" class="btn outline">Already have an account?</a>
+      </div>
+
+      <div id="regFeedback" class="feedback" aria-live="polite"></div>
+    </form>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2025 ElectroHub</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Basic client-side validation enhancement
+    const regForm = document.getElementById('registerForm');
+    const pwd = document.getElementById('password');
+    const confirm = document.getElementById('confirm');
+    const feedback = document.getElementById('regFeedback');
+
+    regForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (pwd.value !== confirm.value) {
+        feedback.textContent = 'Passwords do not match.';
+        feedback.classList.add('error');
+        return;
+      }
+      // Simulated success (no backend)
+      feedback.textContent = 'Registration successful (placeholder). Please login.';
+      feedback.classList.remove('error');
+      feedback.classList.add('success');
+      regForm.reset();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="author" content="Group Members: [Replace with names and student IDs]">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login — ElectroHub</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header small">
+    <div class="brand">
+      <img src="images/logo.png" alt="ElectroHub logo" class="logo"/>
+      <h1>SWA CIHE ElectroHub</h1>
+    </div>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="product.html">Products</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <main class="container narrow">
+    <h2>Login to your account</h2>
+    <p>Please enter your details below to log in.</p>
+
+    <form id="loginForm" class="form card" novalidate>
+      <label>Email
+        <input name="email" type="email" required placeholder="you@example.com" />
+      </label>
+
+      <label>Password
+        <input name="password" type="password" required minlength="8" placeholder="Your password" />
+      </label>
+
+      <div class="form-actions">
+        <button type="button" id="loginBtn" class="btn">Login</button>
+        <a href="register.html" class="btn outline">Don't have an account? Register</a>
+      </div>
+
+      <div id="loginFeedback" class="feedback" aria-live="polite"></div>
+    </form>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2025 ElectroHub</p>
+  </footer>
+
+  <script>
+    // Simple login interactivity (no backend)
+    const loginBtn = document.getElementById('loginBtn');
+    const feedback = document.getElementById('loginFeedback');
+
+    if (loginBtn) {
+      loginBtn.addEventListener('click', () => {
+        const name = prompt('Enter demo username (placeholder):', 'student01');
+        if (name) {
+          sessionStorage.setItem('user', JSON.stringify({ name }));
+          feedback.textContent = 'Logged in as ' + name + ' (placeholder)';
+          feedback.classList.remove('error');
+          feedback.classList.add('success');
+
+          // Redirect after login
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 1500);
+        } else {
+          feedback.textContent = 'Login cancelled.';
+          feedback.classList.add('error');
+        }
+      });
+    }
+
+    function showUserState() {
+      const user = JSON.parse(sessionStorage.getItem('user') || 'null');
+      if (user) {
+        const btn = document.getElementById('loginBtn');
+        if (btn) btn.textContent = 'Hi, ' + (user.name || 'User');
+      }
+    }
+    document.addEventListener('DOMContentLoaded', showUserState);
+  </script>
+</body>
+</html>
